@@ -445,7 +445,12 @@ def get_tou_price(timestamp):
         return 0.40
 
 # API Configuration
+# API Configuration with working tokens
 ACN_TOKEN = 'HlIvydGsLxJHevg7BT6hlVMiO0utDVZQkQz-F2yYHBQ'
+NOAA_TOKEN = 'BzYUIRtaVJtrXGcvpfHfppNbiRQrbpqT'
+NREL_KEY = 'UgYalgH1ZcrxBvbFS3NUTH9WTcuTiLaj10HItAlZ'
+EMAIL = 'afandellshaikh@gmail.com'
+
 auth = base64.b64encode(f"{ACN_TOKEN}:".encode()).decode()
 headers = {'Authorization': 'Basic ' + auth}
 
@@ -518,13 +523,7 @@ else:
         'session_count': 'sum'
     }).reset_index().rename(columns={'time_15min': 'time_day'})
 
-import requests
-import time
-import pandas as pd
-
-NOAA_TOKEN = "BzYUIRtaVJtrXGcvpfHfppNbiRQrbpqT"
-NREL_KEY = "UgYalgH1ZcrxBvbFS3NUTH9WTcuTiLaj10HItAlZ"
-EMAIL = "afandellshaikh@gmail.com"
+# Note: API tokens already defined above
 
 def fetch_noaa_weather(lat, lon, delta=0.2):
     """Fetch NOAA weather station near lat/lon."""
@@ -851,7 +850,7 @@ def add_exogenous_features_enhanced(df, time_col, weather_data, solar_data, pric
     df['renewable_premium'] = np.where(df['renewables_pct'] > 50, 0.95, 1.0)
     df['weather_comfort_index'] = (25 - abs(df['temperature'] - 25)) / 25  # Peak comfort at 25°C
 
-print("✓ Enhanced exogenous features added. Data shape: {df.shape}")
+    print(f"✓ Enhanced exogenous features added. Data shape: {df.shape}")
     return df
 
 # Build a documentation DataFrame for feature alignment (for reporting)
